@@ -1,36 +1,90 @@
 # Linux_Server
 
-Accessed the web app with the following credentials:
+Project 7 under the Full Stack Web Developer Nanodegree at Udacity:
 
-    IP address: http://35.167.27.204
-    SSH port: 2200
-    User: grader
+public Ip: 54.205.252.64
+SSH PORT: 2200
+User: grader
 
-Get your server.
+Tasks given and method for completion:
 
-1. Start a new Ubuntu Linux server instance on Amazon Lightsail. There are full details on setting up your Lightsail instance on the next page.
-2. Follow the instructions provided to SSH into your server.
-Secure your server.
+.Start a new Ubuntu Linux server instance on Amazon Lightsail.
+.You will get your respective public and private IP address and key_pair as well.
 
-3. Update all currently installed packages.
-4. Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
-5. Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
-6. Create a new user account named grader.
-7. Give grader the permission to sudo.
-8. Create an SSH key pair for grader using the ssh-keygen tool.
-Prepare to deploy your project.
+Create a new user named grader
 
-9. Configure the local timezone to UTC.
-10. Install and configure Apache to serve a Python mod_wsgi application.
-11. Install and configure PostgreSQL:
+.sudo adduser grader
 
-    Do not allow remote connections
-    Create a new database user named catalog that has limited permissions to your catalog application database.
+.Give sudo access to grader.
+   $ sudo nano /etc/sudoers.d/grader
+Add the following text to the the newly created file:
+   grader ALL=(ALL:ALL) ALL
+   
+Update all currently installed packages
 
-12. Install git.
-Deploy the Item Catalog project.
+.sudo apt-get update
+.sudo sudo apt-get upgrade   
 
-13. Clone and setup your Item Catalog project from the Github repository you created earlier in this Nanodegree program.
-14. Set it up in your server so that it functions correctly when visiting your server’s IP address in a browser. Make sure that your .git directory is not publicly accessible via a browser!
+. Setup SSH keys for grader.
+  $ ssh-keygen -t rsa
+  
+  Source:https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
+  
+ . Enforce key-based authentication | Change the SSH port from 22 to 2200 | Disable login for root user.
+    $ nano /etc/ssh/sshd_config 
+    $ sudo service ssh restart
+    
+ . Change timezone to UTC.
+      $ sudo timedatectl set-timezone UTC
+      
+ . Configure the Uncomplicated Firewall (UFW)
 
+  $ sudo ufw default deny incoming
+  $ sudo ufw default allow outgoing
+  $ sudo ufw allow 2200/tcp
+  $ sudo ufw allow www
+  $ sudo ufw allow ntp
+  $ sudo ufw enable
+  
+  . Install and Configure Apache2 and mod-wsgi and Git
+    $ sudo apt-get install apache2 libapache2-mod-wsgi git
+    $ sudo a2enmod wsgi
+  . Install and configure PostgreSQL
+    $ sudo apt-get install libpq-dev python-dev
+    $ sudo apt-get install postgresql postgresql-contrib
+    $ sudo su - postgres
+    $ psql
+    
+Create a new User named catalog: # CREATE USER catalog WITH PASSWORD 'password';
 
+Create a new DB named catalog: # CREATE DATABASE catalog WITH OWNER catalog;
+
+Connect to the database catalog : # \c catalog
+
+Revoke all rights: # REVOKE ALL ON SCHEMA public FROM public;
+
+Lock down the permissions only to user catalog: # GRANT ALL ON SCHEMA public TO catalog;
+
+Log out from PostgreSQL: # \q. Then return to the grader user: $ exit
+
+.Create flask app :https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+
+Install Flask and other dependencies
+
+  $ sudo apt-get install python-pip
+  $ sudo pip install Flask
+  $ sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils
+  
+.Clone the Catalog app from Github
+
+Make a catalog named directory in /var/www
+  $ sudo mkdir /var/www/catalog
+Change the owner of the directory catalog
+ $ sudo chown -R grader:grader /var/www/catalog
+Clone the Project_Catalog from github to the catalog directory:
+ $ git clone https://github.com/CPriya14/Catalog_Project
+
+ Restart Apache to launch the app
+
+ $ sudo service apache2 restart 
+    
