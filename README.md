@@ -3,7 +3,9 @@
 Project 7 under the Full Stack Web Developer Nanodegree at Udacity:
 
 public Ip: 54.205.252.64
+
 SSH PORT: 2200
+
 User: grader
 
 Tasks given and method for completion:
