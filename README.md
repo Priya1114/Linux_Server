@@ -8,6 +8,9 @@ SSH PORT: 2200
 
 User: grader
 
+Rsa key:
+
+
 Tasks given and method for completion:
 
 .Start a new Ubuntu Linux server instance on Amazon Lightsail.
