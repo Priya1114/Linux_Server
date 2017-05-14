@@ -69,14 +69,21 @@ Add root to /etc/sudoers.d/ and type in root ALL=(ALL:ALL) ALLby command sudo na
    
 9.Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123)
 
-   .Check UFW status to make sure its inactivesudo ufw status
-   .Deny all incoming by defaultsudo ufw default deny incoming
-   .Allow outgoing by defaultsudo ufw default allow outgoing
-   .Allow SSH sudo ufw allow ssh
-   .Allow SSH on port 2200sudo ufw allow 2200/tcp
-   .Allow HTTP on port 80sudo ufw allow 80/tcp
-   .Allow NTP on port 123sudo ufw allow 123/udp  
-   .Turn on firewallsudo ufw enable
+ .Check UFW status to make sure its inactivesudo ufw status
+   
+ .Deny all incoming by defaultsudo ufw default deny incoming
+  
+.Allow outgoing by defaultsudo ufw default allow outgoing
+
+.Allow SSH sudo ufw allow ssh
+
+.Allow SSH on port 2200sudo ufw allow 2200/tcp
+
+.Allow HTTP on port 80sudo ufw allow 80/tcp
+
+.Allow NTP on port 123sudo ufw allow 123/udp  
+
+.Turn on firewallsudo ufw enable
 
 10.Configure the local timezone to UTC
 
