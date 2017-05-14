@@ -205,14 +205,23 @@ by default no remote connections are not allowed
  login as postgres super usersudo su - postgres
  
  enter postgrespsql
+ 
  Create user catalogCREATE USER catalog WITH PASSWORD 'db-password';
+ 
  Change role of user catalog to creatDBALTER USER catalog CREATEDB;
+ 
  List all users and roles to verify\du
+ 
  Create new DB "catalog" with own of catalogCREATE DATABASE catalog WITH OWNER catalog;
+ 
  Connect to database\c catalog
+ 
  Revoke all rights REVOKE ALL ON SCHEMA public FROM public;
+ 
  Give accessto only catalog roleGRANT ALL ON SCHEMA public TO catalog;
+ 
  Quit postgres\q
+ 
  logout from postgres super userexit
  Setup your database schema python database_setup.py
 
