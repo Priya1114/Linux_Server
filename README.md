@@ -19,6 +19,8 @@ Tasks given and method for completion:
 2.Create a new user named grader
 
   $sudo adduser grader
+  Password:priya1411
+  
   .Give the grader the permission to sudo
     $sudo visudo
    inside the file add grader ALL=(ALL:ALL) ALL below the root user under "#User privilege specification" 
